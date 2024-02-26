@@ -1,2 +1,2 @@
 # js_helpers_utils
-JS helpers &amp; utils
+JavaScript helpers & utils for other projects.
