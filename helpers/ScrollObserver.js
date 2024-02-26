@@ -48,8 +48,8 @@ export default class ScrollObserver {
      */
     destroy() {
         this.options.root.removeEventListener("scroll", this.eventHandler);
-        for (const funcs of Object.values(this.events)) {
-            funcs = [];
+        for (const key of Object.keys(this.events)) {
+            this.events[key] = [];
         }
     }
 
