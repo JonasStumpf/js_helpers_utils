@@ -1,6 +1,6 @@
 "use strict";
 
-/** EventManager Class
+/** EventManager
  * Manages Events:
  * - Add Events
  * - Remove Events
@@ -45,6 +45,7 @@ export default class EventManager {
         this.#dispatchTargets(name, data, targets, options);
         this.#dispatchList(name, data);
     }
+    //dispatch on dom targets
     #dispatchTargets(name, data, targets, options) {
         if (!targets) return;
         const event = new CustomEvent(name, {cancelable: true, ...options, detail: data});
@@ -52,6 +53,7 @@ export default class EventManager {
             target.dispatchEvent(event);
         }
     }
+    //dispatch on functions added to EventManager
     #dispatchList(name, data) {
         if (!this.#events[name]) return;
         for (const callback of this.#events[name]) {
