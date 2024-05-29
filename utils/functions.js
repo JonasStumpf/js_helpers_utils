@@ -37,25 +37,26 @@ export function throttle(func, delay) {
  * @param {Delay} delay flatten delay/wait time
  * @returns flattened function
  */
-export function flatten(func, delay) {
+function flatten(func, delay) {
     let timeout;
     let waiting = false;
+    const fallback = (func instanceof Function) ? func : null;
     const funcs = {
-        start: func.start || func,
-        mid: func.mid || func,
-        end: func.end || func
+        start: func.start || fallback,
+        mid: func.mid || fallback,
+        end: func.end || fallback
     }
     return () => {
         if (!waiting) {
-            if (!timeout) funcs.start.apply(this, arguments);
-            else funcs.mid.apply(this, arguments);
+            if (!timeout) funcs.start?.apply(this, arguments);
+            else funcs.mid?.apply(this, arguments);
             waiting = true;
             setTimeout(() => {waiting = false}, delay);
         }
         clearTimeout(timeout)
         timeout = setTimeout(() => {
             timeout = null;
-            funcs.end.apply(this, arguments);
+            funcs.end?.apply(this, arguments);
         }, delay);
     }
 }
